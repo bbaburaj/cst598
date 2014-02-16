@@ -6,21 +6,21 @@ import java.util.List;
 public class StudentInfo {
 	private String firstName;
 	private String lastName;
-	private List<String> languagesKnown;
-	private List<DaysOfWeek> daysAvailable;
-	private String type;
+	private String languagesKnown;
+	private String daysAvailable;
+	private String studentId;
 	
-	public StudentInfo(String firstName, String lastName, List<String> languagesKnown,
-			List<DaysOfWeek> daysAvailable, String type){
+	public StudentInfo(String firstName, String lastName, String languagesKnown,
+			String daysAvailable, String id){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.languagesKnown = languagesKnown;
 		this.daysAvailable = daysAvailable;
-		this.type = type;
+		this.studentId = id;
 	}
 
 	public String toString(){
-		String output = "Student "+this.firstName+" "+this.lastName+" is a "+this.type+"\n";
-		return output;
+		return "Student: "+this.firstName+" "+this.lastName+" ID: "+this.studentId+"\n";
+		
 	}
 }
