@@ -6,12 +6,12 @@ import java.util.List;
 public class StudentInfo {
 	private String firstName;
 	private String lastName;
-	private String languagesKnown;
-	private String daysAvailable;
+	private String[] languagesKnown;
+	private String[] daysAvailable;
 	private String studentId;
 	
-	public StudentInfo(String firstName, String lastName, String languagesKnown,
-			String daysAvailable, String id){
+	public StudentInfo(String firstName, String lastName, String[] languagesKnown,
+			String[] daysAvailable, String id){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.languagesKnown = languagesKnown;
@@ -20,7 +20,34 @@ public class StudentInfo {
 	}
 
 	public String toString(){
-		return "Student: "+this.firstName+" "+this.lastName+" ID: "+this.studentId+"\n";
-		
+		return "Student: "+this.firstName+" "+this.lastName+" ID: "+this.studentId+"\n";	
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getLanguagesKnown() {
+		String languages ="";
+		for(String s:languagesKnown){
+			languages =s.concat(",");
+		}
+		return languages;
+	}
+
+	public String getDaysAvailable() {
+		String days ="";
+		for(String s:daysAvailable){
+			days =s.concat(",");
+		}
+		return days;
+	}
+
+	public String getStudentId() {
+		return studentId;
 	}
 }

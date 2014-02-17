@@ -1,6 +1,9 @@
 package students;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 
 public class FormEntry {
@@ -15,22 +18,26 @@ public class FormEntry {
 		this(new BufferedReader(new FileReader(fname)));
 	}
 	
+	public FormEntry(InputStream st) throws IOException{
+		this(new BufferedReader(new InputStreamReader(st)));
+	}
+	
 	private FormEntry(BufferedReader br) throws IOException {	
 		String fName = null;
 		String lName = null;
 		String id = null;
-		String languagesKnown = null;
-		String daysAvailable = null;
+		String[] languagesKnown = null;
+		String[] daysAvailable = null;
 
 		try {
 			String nextLine = null;
 			while ( (nextLine=br.readLine()) != null)
 			{
-				fName  = nextLine;
+				id  = nextLine;
+				fName = br.readLine();
 				lName = br.readLine();
-				languagesKnown = br.readLine();
-				daysAvailable = br.readLine();
-				id = br.readLine();
+				languagesKnown = br.readLine().split(",");
+				daysAvailable = br.readLine().split(",");
 				addInfo(fName, lName, languagesKnown, daysAvailable, id);
 			}
 			br.close();
@@ -38,48 +45,31 @@ public class FormEntry {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("Error process phonebook");
-			throw new IOException("Could not process phonebook file");
+			System.out.println("Error processing student entries");
+			throw new IOException("Failed to process student.txt");
 		}
 	}
 
-	public void savePhoneBook(String fname)
-	{
-		try {
-			System.out.println("Opening " + fname);
-			PrintWriter pw = new PrintWriter(new FileOutputStream(fname));
-			System.out.println("...done");
-			String[] entries = listEntries();
-			for (int i = 0; i < entries.length; i++)
-				pw.println(entries[i]);
-
-			pw.close();
-		}
-		catch (Exception exc)
-		{ 
-			exc.printStackTrace(); 
-			System.out.println("Error saving phone book");
-		}
-	}
-	
-
-	public void addInfo(String fname, String lname, String lang, String days, String id)
+	public void addInfo(String fname, String lname, String[] lang, String[] days, String id)
 	{ 
 		addInfo(id, new StudentInfo(fname, lname, lang, days, id));
 	}
 
 	public void addInfo(String number, StudentInfo newEntry)
 	{ sInfoMap.put(number, newEntry); }
-
-	public String[] listEntries()
-	{
-		String[] rval = new String[sInfoMap.size()];
-		int i = 0;
-		StudentInfo nextEntry = null;
-		for (Iterator<StudentInfo> iter = sInfoMap.values().iterator(); iter.hasNext();) {
-			nextEntry = iter.next();
-			rval[i++] = nextEntry.toString();
+	
+	public void updateStudentFile(String name) throws IOException, URISyntaxException{
+		File f = new File(name);
+		BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+		Iterator<StudentInfo> i = sInfoMap.values().iterator();
+		while(i.hasNext()){
+			StudentInfo student = i.next();
+			writer.write(student.getStudentId());
+			writer.write(student.getFirstName());
+			writer.write(student.getLastName());
+			writer.write(student.getLanguagesKnown());
+			writer.write(student.getDaysAvailable());
 		}
-		return rval;
 	}
+
 }
