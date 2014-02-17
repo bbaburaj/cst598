@@ -8,6 +8,7 @@ import java.util.*;
 
 public class FormEntry {
 	public static final String STUDENT_FILE = "student.txt";
+	public static final String NEW_LINE = System.getProperty("line.separator");
 	
 	private Map<String, StudentInfo> sInfoMap = new HashMap<String, StudentInfo>();
 
@@ -60,16 +61,23 @@ public class FormEntry {
 	
 	public void updateStudentFile(String name) throws IOException, URISyntaxException{
 		File f = new File(name);
-		BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(f.getAbsoluteFile()));
 		Iterator<StudentInfo> i = sInfoMap.values().iterator();
 		while(i.hasNext()){
 			StudentInfo student = i.next();
-			writer.write(student.getStudentId());
-			writer.write(student.getFirstName());
-			writer.write(student.getLastName());
-			writer.write(student.getLanguagesKnown());
-			writer.write(student.getDaysAvailable());
+			writer.write(student.getStudentId()+NEW_LINE);
+			writer.write(student.getFirstName()+NEW_LINE);
+			writer.append(student.getLastName()+NEW_LINE);
+			writer.append(student.getLanguagesKnown()+NEW_LINE);
+			writer.append(student.getDaysAvailable()+NEW_LINE);
 		}
+		writer.close();
 	}
+	
+	public int getTotalStudents(){
+		System.out.println(sInfoMap.size());
+		return sInfoMap.size();
+	}
+	
 
 }

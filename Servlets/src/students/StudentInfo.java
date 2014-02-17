@@ -14,8 +14,16 @@ public class StudentInfo {
 			String[] daysAvailable, String id){
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.languagesKnown = languagesKnown;
-		this.daysAvailable = daysAvailable;
+		if(languagesKnown == null) {
+			this.languagesKnown = new String[]{"No Info"};
+		}else{
+			this.languagesKnown = languagesKnown;
+		}
+		if(daysAvailable == null) {
+			this.daysAvailable = new String[]{"No Info"};
+		}else{
+			this.daysAvailable = daysAvailable;
+		}		
 		this.studentId = id;
 	}
 
@@ -34,7 +42,7 @@ public class StudentInfo {
 	public String getLanguagesKnown() {
 		String languages ="";
 		for(String s:languagesKnown){
-			languages =s.concat(",");
+			languages =languages.concat(s.concat(","));
 		}
 		return languages;
 	}
@@ -42,7 +50,7 @@ public class StudentInfo {
 	public String getDaysAvailable() {
 		String days ="";
 		for(String s:daysAvailable){
-			days =s.concat(",");
+			days =days.concat(s.concat(","));
 		}
 		return days;
 	}
