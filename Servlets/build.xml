@@ -37,9 +37,6 @@
     <copy todir="${build.home}/WEB-INF">
       <fileset dir="." includes="${classes.dir}/**,${lib.dir}/**" excludes="${classes.dir}/driver/**"/>
     </copy>
-    <copy todir="${build.home}/WEB-INF/${classes.dir}">
-      <fileset dir="${properties.dir}"/>
-    </copy>
     <copy todir="${build.home}/resources">
       <fileset dir="${resources.dir}"/>
     </copy>
@@ -57,7 +54,7 @@
   <!-- submit creates a single jarfile that you will upload to the
        Gradebook channel on the class portal. -->
   <target name="submit" depends="dist">
-    <jar destfile="${submit.jar}" basedir="." includes="README.txt,build.properties,build.xml,web.xml,${src.dir}/**,${docs.dir}/**,${javadoc.dir}/**,${properties.dir}/**,${lib.dir}/**,${classes.dir}/**">
+    <jar destfile="${submit.jar}" basedir="." includes="README.txt,build.properties,build.xml,web.xml,${src.dir}/**,${docs.dir}/**,${javadoc.dir}/**,${lib.dir}/**,${classes.dir}/**">
      </jar>
   </target>
 
