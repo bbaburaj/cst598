@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -49,20 +50,31 @@ public class StudentInfoServlet extends HttpServlet{
 		} catch (URISyntaxException e) {
 			out.println("<H1> Transaction was unsuccessful</H1>");
 		}
+		out.println("<a href=\"http://localhost:8080/lab3Task1/form.html\"> Student Info Page</a>");
 		out.println("</BODY></HTML>");
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException	{
-		System.out.println(request.getRequestURI());
-		System.out.println(request.getQueryString());
-		System.out.println("Param_Map"+request.getParameterMap());
-		String action = request.getParameter("action");
+		response.setContentType("text/html");
 		PrintWriter out= response.getWriter();
-		if (action == null || action.length() == 0) {
-			out.println("No Action provided");
-			out.println("</BODY></HTML>"); 
-			return;
+		out.println("<HTML><HEAD><TITLE>Current Student Information</TITLE></HEAD><BODY>");
+		ServletContext sc = getServletContext();
+		InputStream is = sc.getResourceAsStream(file);
+
+		FormEntry entry = new FormEntry(is);
+
+		try {
+				List<String> entries = entry.listAllInformation();
+				for (int i = entries.size()-1; i >=0; i--)
+					out.println(entries.get(i) + "<br>");
 		}
-	}
+		catch (Exception exc)
+		{
+			out.println("<p>Java exception satisfying request</p>");
+			exc.printStackTrace();
+		}
+		out.println("</BODY></HTML>");
+		}
+	
 }

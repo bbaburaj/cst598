@@ -10,7 +10,7 @@ public class FormEntry {
 	public static final String STUDENT_FILE = "student.txt";
 	public static final String NEW_LINE = System.getProperty("line.separator");
 	
-	private Map<String, StudentInfo> sInfoMap = new HashMap<String, StudentInfo>();
+	private Map<String, StudentInfo> sInfoMap = new Hashtable<String, StudentInfo>();
 
 	public FormEntry() throws IOException {
 		this(STUDENT_FILE); 
@@ -57,7 +57,8 @@ public class FormEntry {
 	}
 
 	public void addInfo(String number, StudentInfo newEntry)
-	{ sInfoMap.put(number, newEntry); }
+	{ sInfoMap.put(number, newEntry); 
+	System.out.println(sInfoMap.size());}
 	
 	public void updateStudentFile(String name) throws IOException, URISyntaxException{
 		File f = new File(name);
@@ -75,8 +76,17 @@ public class FormEntry {
 	}
 	
 	public int getTotalStudents(){
-		System.out.println(sInfoMap.size());
 		return sInfoMap.size();
+	}
+	
+	public List<String> listAllInformation(){
+		List<String> output = new ArrayList<String>();
+		Iterator<StudentInfo> it = sInfoMap.values().iterator();
+		while(it.hasNext()){
+			StudentInfo st = it.next();
+			output.add(st.toString());
+		}
+		return output;
 	}
 	
 
