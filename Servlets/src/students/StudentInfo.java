@@ -8,28 +8,22 @@ public class StudentInfo {
 	private String[] languagesKnown;
 	private String[] daysAvailable;
 	private String studentId;
+	private String school;
 
 	public StudentInfo(String firstName, String lastName,
-			String[] languagesKnown, String[] daysAvailable, String id) {
+			String[] languagesKnown, String[] daysAvailable, String id, String school) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		if (languagesKnown == null) {
-			this.languagesKnown = new String[] { "No Info" };
-		} else {
-			this.languagesKnown = languagesKnown;
-		}
-		if (daysAvailable == null) {
-			this.daysAvailable = new String[] { "No Info" };
-		} else {
-			this.daysAvailable = daysAvailable;
-		}
+		this.languagesKnown = languagesKnown;
+		this.daysAvailable = daysAvailable;
 		this.studentId = id;
+		this.school = school;
 	}
 
 	public String toString() {
-		return "Student: " + this.firstName + " " + this.lastName + " ID: "
-				+ this.studentId + " knows:" + this.getLanguagesKnown()
-				+ " is free on:" + this.getDaysAvailable();
+		return "Student ID:"+this.studentId+", Name:"+ this.firstName + " " + this.lastName+
+				" knows:" + this.getLanguagesKnown()+" is from:"+this.getSchool()
+				+ "\r\nis free on:" + this.getDaysAvailable();
 	}
 
 	public String getFirstName() {
@@ -59,4 +53,8 @@ public class StudentInfo {
 	public String getStudentId() {
 		return studentId;
 	}
+	public String getSchool(){
+		return school;
+	}
 }
+

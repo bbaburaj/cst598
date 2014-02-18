@@ -13,6 +13,7 @@ public class FormEntry {
 	private static String searchLastName = "lastname";
 	private static String searchLanguages = "languages";
 	private static String searchAvailability = "days";
+	private static String searchSchool = "school";
 	
 	private Map<String, StudentInfo> sInfoMap = new Hashtable<String, StudentInfo>();
 
@@ -33,6 +34,7 @@ public class FormEntry {
 		String id = null;
 		String[] languagesKnown = null;
 		String[] daysAvailable = null;
+		String school = null;
 
 		try {
 			String nextLine = null;
@@ -43,7 +45,8 @@ public class FormEntry {
 				lName = br.readLine();
 				languagesKnown = br.readLine().split(",");
 				daysAvailable = br.readLine().split(",");
-				addInfo(fName, lName, languagesKnown, daysAvailable, id);
+				school = br.readLine();
+				addInfo(fName, lName, languagesKnown, daysAvailable, id, school);
 			}
 			br.close();
 		}
@@ -55,9 +58,9 @@ public class FormEntry {
 		}
 	}
 
-	public void addInfo(String fname, String lname, String[] lang, String[] days, String id)
+	public void addInfo(String fname, String lname, String[] lang, String[] days, String id, String school)
 	{ 
-		addInfo(id, new StudentInfo(fname, lname, lang, days, id));
+		addInfo(id, new StudentInfo(fname, lname, lang, days, id,school));
 	}
 
 	public void addInfo(String number, StudentInfo newEntry)
@@ -74,6 +77,7 @@ public class FormEntry {
 			writer.append(student.getLastName()+NEW_LINE);
 			writer.append(student.getLanguagesKnown()+NEW_LINE);
 			writer.append(student.getDaysAvailable()+NEW_LINE);
+			writer.append(student.getSchool()+NEW_LINE);
 		}
 		writer.close();
 	}
@@ -111,6 +115,11 @@ public class FormEntry {
 					if(st.getLastName().contains(searchFor[1]))output = st.toString();
 					else{break;}
 				} 
+				if(searchFor[0].equalsIgnoreCase(searchSchool)){
+					searchFor[1] = searchFor[1].replaceAll("%20", " ");
+					if(st.getSchool().contains(searchFor[1]))output = st.toString();
+					else{break;}
+				} 
 				if(searchFor[0].equalsIgnoreCase(searchLanguages)){
 					String lang[] = searchFor[1].split("\\+");
 					output="";
@@ -133,7 +142,6 @@ public class FormEntry {
 					if(output.length()==0)break;
 				}
 			}
-			System.out.println("["+output+"]");
 			if (output.length()>0)result.add(output);
 		}
 		return result;
