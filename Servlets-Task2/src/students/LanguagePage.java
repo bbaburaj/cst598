@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LangugePage extends HttpServlet{
+public class LanguagePage extends HttpServlet{
 	private static String file = null;
 
 	public void init(ServletConfig config) throws ServletException {

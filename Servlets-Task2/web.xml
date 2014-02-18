@@ -31,7 +31,7 @@
   </servlet>
   <servlet>
     <servlet-name>week</servlet-name>
-    <servlet-class>students.AvailabilityPage</servlet-class>
+    <servlet-class>students.WeekPage</servlet-class>
     <init-param>
     	<param-name>student_list</param-name>
     	<param-value>/resources/student.txt</param-value>
@@ -40,7 +40,7 @@
   </servlet>
   <servlet>
     <servlet-name>school</servlet-name>
-    <servlet-class>students.HighSchoolPage</servlet-class>
+    <servlet-class>students.SchoolPage</servlet-class>
     <init-param>
     	<param-name>student_list</param-name>
     	<param-value>/resources/student.txt</param-value>
