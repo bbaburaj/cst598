@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,6 +16,7 @@ public class StudentInfoServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 	private static String file = null;
+
 
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
@@ -56,6 +58,7 @@ public class StudentInfoServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException	{
+		String queryString = request.getQueryString();
 		response.setContentType("text/html");
 		PrintWriter out= response.getWriter();
 		out.println("<HTML><HEAD><TITLE>Current Student Information</TITLE></HEAD><BODY>");
@@ -63,18 +66,23 @@ public class StudentInfoServlet extends HttpServlet{
 		InputStream is = sc.getResourceAsStream(file);
 
 		FormEntry entry = new FormEntry(is);
-
-		try {
-				List<String> entries = entry.listAllInformation();
-				for (int i = entries.size()-1; i >=0; i--)
-					out.println(entries.get(i) + "<br>");
-		}
-		catch (Exception exc)
-		{
-			out.println("<p>Java exception satisfying request</p>");
-			exc.printStackTrace();
+		if(queryString==null){
+			try {
+					List<String> entries = entry.listAllInformation();
+					for (int i = entries.size()-1; i >=0; i--)
+						out.println(entries.get(i) + "<br>");
+			}
+			catch (Exception exc)
+			{
+				out.println("<p>Java exception satisfying request</p>");
+				exc.printStackTrace();
+			}
+		} else{
+			List<String> entries = entry.searchEntry(queryString);
+			for (int i = entries.size()-1; i >=0; i--)
+				out.println(entries.get(i) + "<br>");
 		}
 		out.println("</BODY></HTML>");
-		}
+	}
 	
 }

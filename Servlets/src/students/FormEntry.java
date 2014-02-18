@@ -9,6 +9,10 @@ import java.util.*;
 public class FormEntry {
 	public static final String STUDENT_FILE = "student.txt";
 	public static final String NEW_LINE = System.getProperty("line.separator");
+	private static String searchFirstName = "firstname";
+	private static String searchLastName = "lastname";
+	private static String searchLanguages = "languages";
+	private static String searchAvailability = "days";
 	
 	private Map<String, StudentInfo> sInfoMap = new Hashtable<String, StudentInfo>();
 
@@ -57,8 +61,7 @@ public class FormEntry {
 	}
 
 	public void addInfo(String number, StudentInfo newEntry)
-	{ sInfoMap.put(number, newEntry); 
-	System.out.println(sInfoMap.size());}
+	{ sInfoMap.put(number, newEntry);}
 	
 	public void updateStudentFile(String name) throws IOException, URISyntaxException{
 		File f = new File(name);
@@ -87,6 +90,54 @@ public class FormEntry {
 			output.add(st.toString());
 		}
 		return output;
+	}
+	
+	public List<String> searchEntry(String qString){
+		List<String> result = new ArrayList<String>();
+		Iterator<StudentInfo> it =sInfoMap.values().iterator();
+		StringTokenizer tokenizer =null;
+		while(it.hasNext()){
+			StudentInfo st = it.next();
+			tokenizer = new StringTokenizer(qString,"&");
+			String output = "";
+			while(tokenizer.hasMoreTokens()){
+				String[] searchFor = tokenizer.nextToken().split("=");
+				System.out.println(searchFor[0]+" "+searchFor[1]);
+				if(searchFor[0].equalsIgnoreCase(searchFirstName)){
+					if(st.getFirstName().contains(searchFor[1]))output = st.toString();
+					else{break;}
+				} 
+				if(searchFor[0].equalsIgnoreCase(searchLastName)){
+					if(st.getLastName().contains(searchFor[1]))output = st.toString();
+					else{break;}
+				} 
+				if(searchFor[0].equalsIgnoreCase(searchLanguages)){
+					String lang[] = searchFor[1].split("\\+");
+					output="";
+					for(String s:lang){
+						if(st.getLanguagesKnown().contains(s)){
+							output = st.toString();
+						}
+					} 
+					if(output.length()==0)break;
+					
+				}
+				if(searchFor[0].equalsIgnoreCase(searchAvailability)){
+					String days[] = searchFor[1].split("\\+");
+					output="";
+					for(String s:days){
+						if(st.getDaysAvailable().contains(s)){
+							output = st.toString();
+						}
+					}
+					if(output.length()==0)break;
+				}
+			}
+			System.out.println("["+output+"]");
+			if (output.length()>0)result.add(output);
+		}
+		return result;
+		
 	}
 	
 
