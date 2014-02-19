@@ -108,23 +108,23 @@ public class FormEntry {
 				String[] searchFor = tokenizer.nextToken().split("=");
 				System.out.println(searchFor[0]+" "+searchFor[1]);
 				if(searchFor[0].equalsIgnoreCase(searchFirstName)){
-					if(st.getFirstName().contains(searchFor[1]))output = st.toString();
+					if(st.getFirstName().toLowerCase().contains(searchFor[1].toLowerCase()))output = st.toString();
 					else{break;}
 				} 
 				if(searchFor[0].equalsIgnoreCase(searchLastName)){
-					if(st.getLastName().contains(searchFor[1]))output = st.toString();
+					if(st.getLastName().toLowerCase().contains(searchFor[1].toLowerCase()))output = st.toString();
 					else{break;}
 				} 
 				if(searchFor[0].equalsIgnoreCase(searchSchool)){
 					searchFor[1] = searchFor[1].replaceAll("%20", " ");
-					if(st.getSchool().contains(searchFor[1]))output = st.toString();
+					if(st.getSchool().toLowerCase().contains(searchFor[1].toLowerCase()))output = st.toString();
 					else{break;}
 				} 
 				if(searchFor[0].equalsIgnoreCase(searchLanguages)){
 					String lang[] = searchFor[1].split("\\+");
 					output="";
 					for(String s:lang){
-						if(st.getLanguagesKnown().contains(s)){
+						if(st.getLanguagesKnown().toLowerCase().contains(s.toLowerCase())){
 							output = st.toString();
 						}
 					} 
@@ -135,7 +135,7 @@ public class FormEntry {
 					String days[] = searchFor[1].split("\\+");
 					output="";
 					for(String s:days){
-						if(st.getDaysAvailable().contains(s)){
+						if(st.getDaysAvailable().toLowerCase().contains(s.toLowerCase())){
 							output = st.toString();
 						}
 					}

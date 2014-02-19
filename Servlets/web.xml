@@ -16,5 +16,9 @@
     <servlet-name>studentServlet</servlet-name>
     <url-pattern>/studentServlet</url-pattern>
   </servlet-mapping>
+  
+  <welcome-file-list>
+        <welcome-file>form.html</welcome-file>
+  </welcome-file-list>
 
 </web-app>
