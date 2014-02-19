@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class WelcomePage extends HttpServlet{
+	public static StudentInfo student = new StudentInfo();
 	private static String file = null;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -24,14 +25,18 @@ public class WelcomePage extends HttpServlet{
 		System.out.println("Loaded init param student_info with " + file);
 	}
 	
+	public void doGet(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("Hello in get");
+	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
-		String id = request.getParameter("id");
-		System.out.println(id);
-		
-		out.println("</BODY></HTML>");
+		out.println("<HTML><HEAD><TITLE> Information Page</TITLE></HEAD><BODY>");
+		out.println("<h1>Enter Your Name</h1> <form name=\"nameForm\" action=\"name\" method=\"post\">");
+		out.println("<label>First Name:</label><input type=\"text\" name=\"fName\"><br><label>Last Name: </label><input type=\"text\" name=\"lName\"><br>");
+		out.println("<a href=\"Welcome.html\"> Previous </a><br><a href=\"javascript:document.nameForm.submit();\">Next</a>");
+		out.println("</FORM></BODY></HTML>");
+		student.setStudentId(request.getParameter("id"));
 	}
 }

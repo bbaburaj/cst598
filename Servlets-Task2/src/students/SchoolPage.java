@@ -23,14 +23,29 @@ public class SchoolPage extends HttpServlet{
 		}
 		System.out.println("Loaded init param student_info with " + file);
 	}
-	
+	public void doGet(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("Hello in get school");
+	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		ServletContext sc = getServletContext();
+		InputStream is = sc.getResourceAsStream(file);
+		FormEntry fe = new FormEntry(is);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
 		String school = request.getParameter("school");
-		System.out.println(school);
+		WelcomePage.student.setSchool(school);
+		out.println(WelcomePage.student.toString()+"<br>");
+		fe.addInfo(WelcomePage.student.getStudentId(), WelcomePage.student);
+		try {
+			String realPath = sc.getRealPath("/");
+			realPath = realPath.concat(file.substring(1));
+			fe.updateStudentFile(realPath);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		out.println("</BODY></HTML>");
 	}
 }

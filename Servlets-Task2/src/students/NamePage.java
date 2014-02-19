@@ -31,10 +31,24 @@ public class NamePage extends HttpServlet{
 			throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
-		String fName = request.getParameter("fName");
-		String lName = request.getParameter("lName");
-		System.out.println(fName+" "+lName);
-		out.println("</BODY></HTML>");
+		out.println("<HTML><HEAD><TITLE> Information Page</TITLE></HEAD><BODY>");
+		out.println("<h1>Enter Languages</h1>");
+		out.println("<form name=\"languageForm\" action=\"language\" method=\"post\" >");
+		out.println("<label>Languages Known:</label><br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"C\" >C<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"C++\" >C++<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"C#\" >C#<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"Java\" >Java<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"J#\" >J#<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"Python\" >Python<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"scala\" >scala<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"lisp\" >lisp<br>");
+		out.println("<input type=\"checkbox\" name=\"languages\" value=\"ada\" >ada<br>");
+		out.println("<a href=\"Name.html\" > Previous </a><br><br>");
+		out.println("<a href=\"javascript:document.languageForm.submit();\" >Next</a>");
+		out.println("</FORM></BODY></HTML>");
+		System.out.println(request.getParameter("fName")+" "+request.getParameter("lName"));
+		WelcomePage.student.setFirstName(request.getParameter("fName"));
+		WelcomePage.student.setLastName(request.getParameter("lName"));
 	}
 }

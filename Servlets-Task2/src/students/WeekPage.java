@@ -24,17 +24,22 @@ public class WeekPage extends HttpServlet{
 		System.out.println("Loaded init param student_info with " + file);
 	}
 	
+	public void doGet(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("Hello in get week");
+	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
-
-		String[] availability = request.getParameterValues("availability");
-
-		System.out.println(availability);
-
-		
+		out.println("<h1>Enter Your High School</h1>");
+		out.println("<form action=\"school\" method=\"post\">");
+		out.println("<label>High School:</label><br>");
+		out.println("<input type=\"text\" name=\"school\"><br>");
+		out.println("<input type=\"Submit\" value=\"Submit\">");
+		out.println("<input type=\"Submit\" value=\"cancel\"><br>");
+		out.println("<a href=\"Week.html\"> Previous </a><br>");
 		out.println("</BODY></HTML>");
+		WelcomePage.student.setDaysAvailable(request.getParameterValues("availability"));
 	}
 }
