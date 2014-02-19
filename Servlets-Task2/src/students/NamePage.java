@@ -23,6 +23,9 @@ public class NamePage extends HttpServlet{
 		}
 		System.out.println("Loaded init param student_info with " + file);
 	}
+	public void doGet(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("Hello in get name");
+	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
