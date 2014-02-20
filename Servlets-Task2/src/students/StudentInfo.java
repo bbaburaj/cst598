@@ -9,10 +9,6 @@ public class StudentInfo {
 	private String studentId;
 	private String school;
 	
-	public StudentInfo(){
-		
-	}
-
 	public StudentInfo(String firstName, String lastName,
 			String[] languagesKnown, String[] daysAvailable, String id, String school) {
 		this.firstName = firstName;
@@ -24,9 +20,9 @@ public class StudentInfo {
 	}
 
 	public String toString() {
-		return "Student ID:"+this.studentId+", Name:"+ this.firstName + " " + this.lastName+
-				" knows:" + this.getLanguagesKnown()+" is from:"+this.getSchool()
-				+ "\r\nis free on:" + this.getDaysAvailable();
+		return "Student:"+ this.firstName + " " + this.lastName+
+				",knows:" + this.getLanguagesKnown()+",is from:"+this.getSchool()
+				+ " and is free on:" + this.getDaysAvailable();
 	}
 
 	public String getFirstName() {
@@ -40,27 +36,25 @@ public class StudentInfo {
 	public String getLanguagesKnown() {
 		String languages = "";
 		for (String s : languagesKnown) {
+			if(s.equals("None of the above")){
+				s = "None of the languages";
+			}
 			languages = languages.concat(s.concat(","));
 		}
 		return languages.substring(0,languages.length()-1);
 	}
 	
-	public String[] getLanguagesKnownArray(){
-		return this.languagesKnown;
-	}
-
 	public String getDaysAvailable() {
 		String days = "";
 		for (String s : daysAvailable) {
+			if(s.equals("None of the above")){
+				s = "None of the days";
+			}
 			days = days.concat(s.concat(","));
 		}
 		return days.substring(0,days.length()-1);
 	}
 	
-	public String[] getDaysArray(){
-		return this.daysAvailable;
-	}
-
 	public String getStudentId() {
 		return studentId;
 	}

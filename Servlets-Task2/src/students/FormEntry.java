@@ -173,8 +173,6 @@ public class FormEntry {
 	public List<String> displayTopMatches(StudentInfo currentStudent) {
 		HashMap<Integer, ArrayList<String>> priorityMap = new HashMap<Integer, ArrayList<String>>();
 		List<String> output = new ArrayList<String>();
-		String[] lang = currentStudent.getLanguagesKnownArray();
-		String[] days = currentStudent.getDaysArray();
 		String school = currentStudent.getSchool();
 		String langStr = currentStudent.getLanguagesKnown();
 		String daysStr = currentStudent.getDaysAvailable();
