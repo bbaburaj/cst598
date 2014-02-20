@@ -26,28 +26,46 @@ public class LanguagePage extends HttpServlet{
 		}
 		System.out.println("Loaded init param student_info with " + file);
 	}
-	public void doGet(HttpServletRequest request, HttpServletResponse response){
-		System.out.println("Hello in get language");
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String savedLanguages = ServletUtils.processCookie(request,"languages");
+		String[] languages = null;
+		boolean firstRun = false;
+		if(savedLanguages == null){
+			languages = ServletUtils.languageArray;
+			firstRun = true;
+		}else{
+			languages = savedLanguages.split(",");
+		}
+		out.println("<HTML><HEAD><TITLE> Information Page</TITLE></HEAD><BODY>");
+		out.println("<h1>Enter Languages</h1>");
+		out.println("<form name=\"languageForm\" action=\"language\" method=\"post\" >");
+		out.println("<label>Languages Known:</label><br>");
+		ServletUtils.prePopulateCheckBox(out, languages, "languages",firstRun);
+		out.println("<a href=\"name\" > Previous </a><br><br>");
+		out.println("<a href=\"javascript:document.languageForm.submit();\" >Next</a>");
+		out.println("</FORM></BODY></HTML>");
 	}
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		String savedDays = ServletUtils.processCookie(request,"availability");
+		String[] days = null;
+		boolean firstRun = false;
+		if(savedDays == null){
+			days = ServletUtils.daysArray;
+			firstRun = true;
+		}else{
+			days = savedDays.split(",");
+		}
 		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
 		out.println("<h1>Select Days Available</h1>");
 		out.println("<form name=\"weekForm\" action=\"week\" method=\"post\">");
-		out.println("<input type=\"hidden\" name=\"id\" value=\""+request.getParameter("id")+"\">");
-		out.println("<input type=\"hidden\" name=\"fName\" value=\""+request.getParameter("fName")+"\">");
-		out.println("<input type=\"hidden\" name=\"lName\" value=\""+request.getParameter("lName")+"\">");
-		out.println("<input type=\"hidden\" name=\"languages\" value=\""+ServletUtils.getString(request.getParameterValues("languages"))+"\">");
 		out.println("<label>Available On:</label><br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Monday\">Monday<br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Tuesday\">Tuesday<br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Wednesday\">Wednesday<br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Thursday\">Thursday<br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Friday\">Friday<br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Saturday\">Saturday<br>");
-		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Sunday\">Sunday<br>");
+		ServletUtils.prePopulateCheckBox(out, days, "availability",firstRun);
 		out.println("<a href=\"language\"> Previous </a><br><br>");
 		out.println("<a href=\"javascript:document.weekForm.submit();\">Next</a>");
 		out.println("</BODY></HTML>");

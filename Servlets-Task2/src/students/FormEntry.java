@@ -106,7 +106,6 @@ public class FormEntry {
 			String output = "";
 			while(tokenizer.hasMoreTokens()){
 				String[] searchFor = tokenizer.nextToken().split("=");
-				System.out.println(searchFor[0]+" "+searchFor[1]);
 				if(searchFor[0].equalsIgnoreCase(searchFirstName)){
 					if(st.getFirstName().toLowerCase().contains(searchFor[1].toLowerCase()))output = st.toString();
 					else{break;}

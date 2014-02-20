@@ -31,16 +31,14 @@ public class SchoolPage extends HttpServlet{
 		ServletContext sc = getServletContext();
 		InputStream is = sc.getResourceAsStream(file);
 		FormEntry fe = new FormEntry(is);
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
 		String school = request.getParameter("school");
-		String id = request.getParameter("id");
-		String fName = request.getParameter("fName");
-		String lName = request.getParameter("lName");
-		String[] languages = request.getParameter("languages").split(",");
-		String[] days = request.getParameter("availability").split(",");
+		String id = ServletUtils.processCookie(request, "id");
+		String fName = ServletUtils.processCookie(request, "fName");
+		String lName = ServletUtils.processCookie(request, "lName");
+		String[] languages = ServletUtils.processCookie(request, "languages").split(",");
+		String[] days = ServletUtils.processCookie(request, "availability").split(",");
 		String userAction = request.getParameter("userAction");
-		System.out.println(userAction);
+		ServletUtils.deleteCookies(request, response);
 		if(userAction.equals("Cancel")){
 			response.sendRedirect(request.getContextPath()+"/welcome");
 		}

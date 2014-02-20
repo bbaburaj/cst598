@@ -27,26 +27,43 @@ public class WeekPage extends HttpServlet{
 		System.out.println("Loaded init param student_info with " + file);
 	}
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response){
-		
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String savedDays = ServletUtils.processCookie(request,"availability");
+		String[] days = null;
+		boolean firstRun = false;
+		if(savedDays == null){
+			days = ServletUtils.daysArray;
+			firstRun = true;
+		}else{
+			days = savedDays.split(",");
+		}
+		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
+		out.println("<h1>Select Days Available</h1>");
+		out.println("<form name=\"weekForm\" action=\"week\" method=\"post\">");
+		out.println("<label>Available On:</label><br>");
+		ServletUtils.prePopulateCheckBox(out, days, "availability",firstRun);
+		out.println("<a href=\"language\"> Previous </a><br><br>");
+		out.println("<a href=\"javascript:document.weekForm.submit();\">Next</a>");
+		out.println("</BODY></HTML>");
 	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		String school = ServletUtils.processCookie(request,"school");
+		school = ((school == null) ? "" : school); 
 		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
 		out.println("<h1>Enter Your High School</h1>");
 		out.println("<form action=\"school\" method=\"post\">");
-		out.println("<input type=\"hidden\" name=\"id\" value=\""+request.getParameter("id")+"\">");
-		out.println("<input type=\"hidden\" name=\"fName\" value=\""+request.getParameter("fName")+"\">");
-		out.println("<input type=\"hidden\" name=\"lName\" value=\""+request.getParameter("lName")+"\">");
-		out.println("<input type=\"hidden\" name=\"languages\" value=\""+request.getParameter("languages")+"\">");
-		out.println("<input type=\"hidden\" name=\"availability\" value=\""+ServletUtils.getString(request.getParameterValues("availability"))+"\">");
 		out.println("<label>High School:</label><br>");
-		out.println("<input type=\"text\" name=\"school\"><br>");
+		out.println("<input type=\"text\" name=\"school\" value=\""+school+"\"><br>");
 		out.println("<input type=\"Submit\" name=\"userAction\" value=\"Submit\">");
 		out.println("<input type=\"Submit\" name=\"userAction\" value=\"Cancel\"><br>");
 		out.println("<a href=\"week\"> Previous </a><br>");
 		out.println("</BODY></HTML>");
+		Cookie cookie1 = new Cookie("availability", ServletUtils.getString(request.getParameterValues("availability")));
+		response.addCookie(cookie1);
 	}
 }
