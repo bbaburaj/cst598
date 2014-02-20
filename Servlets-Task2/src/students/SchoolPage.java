@@ -54,7 +54,7 @@ public class SchoolPage extends HttpServlet{
 				e.printStackTrace();
 			}
 			response.sendRedirect(request.getContextPath()+"/welcome");
-			Cookie cookie1 = new Cookie("school", school);
+			Cookie cookie1 = ServletUtils.getCookie(request,"school",school);
 			response.addCookie(cookie1);
 		}
 	}

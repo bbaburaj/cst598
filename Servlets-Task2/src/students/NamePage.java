@@ -63,8 +63,8 @@ public class NamePage extends HttpServlet{
 		out.println("<a href=\"name\" > Previous </a><br><br>");
 		out.println("<a href=\"javascript:document.languageForm.submit();\" >Next</a>");
 		out.println("</FORM></BODY></HTML>");
-		Cookie cookie1 = new Cookie("fName", request.getParameter("fName"));
-		Cookie cookie2 = new Cookie("lName", request.getParameter("lName"));
+		Cookie cookie1 = ServletUtils.getCookie(request,"fName",request.getParameter("fName"));
+		Cookie cookie2 = ServletUtils.getCookie(request,"lName",request.getParameter("lName"));
 		response.addCookie(cookie1);
 		response.addCookie(cookie2);
 		

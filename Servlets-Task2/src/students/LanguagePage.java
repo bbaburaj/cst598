@@ -70,7 +70,7 @@ public class LanguagePage extends HttpServlet{
 		out.println("<a href=\"javascript:document.weekForm.submit();\">Next</a>");
 		out.println("</BODY></HTML>");
 		if(ServletUtils.getString(request.getParameterValues("languages"))!=null){
-		Cookie cookie1 = new Cookie("languages", ServletUtils.getString(request.getParameterValues("languages")));
+		Cookie cookie1 =ServletUtils.getCookie(request, "languages", ServletUtils.getString(request.getParameterValues("languages")));
 		response.addCookie(cookie1);
 		}
 	}

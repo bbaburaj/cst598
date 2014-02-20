@@ -123,7 +123,7 @@ public class WelcomePage extends HttpServlet {
 			out.println("<a href=\"welcome\">Previous</a><br>"
 					+ "<a href=\"javascript:document.nameForm.submit();\">Next</a>");
 			out.println("</FORM>");
-			Cookie cookie1 = new Cookie("id",id);
+			Cookie cookie1 = ServletUtils.getCookie(request, "id", id);
 			response.addCookie(cookie1);
 		}
 		out.println("</BODY></HTML>");

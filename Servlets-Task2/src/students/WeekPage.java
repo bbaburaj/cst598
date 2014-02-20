@@ -63,7 +63,7 @@ public class WeekPage extends HttpServlet{
 		out.println("<input type=\"Submit\" name=\"userAction\" value=\"Cancel\"><br>");
 		out.println("<a href=\"week\"> Previous </a><br>");
 		out.println("</BODY></HTML>");
-		Cookie cookie1 = new Cookie("availability", ServletUtils.getString(request.getParameterValues("availability")));
+		Cookie cookie1 = ServletUtils.getCookie(request, "availability", ServletUtils.getString(request.getParameterValues("availability")));
 		response.addCookie(cookie1);
 	}
 }

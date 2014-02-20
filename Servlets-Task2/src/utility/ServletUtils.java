@@ -19,7 +19,7 @@ import students.StudentInfo;
 public class ServletUtils {
 	private static Map<String, StudentInfo> savedSessions = new HashMap<String, StudentInfo>();
 	public static String[] languageArray = {"java","c#", "c","c++","scala","ada","python","j#","lisp","None of the above"};
-	public static String[] daysArray = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+	public static String[] daysArray = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","None of the above"};
 	public static String generateUniqueId() throws UnsupportedEncodingException{
 		UUID uid = UUID.randomUUID();  
 		String id = URLEncoder.encode(uid.toString(),"UTF-8");
@@ -94,6 +94,20 @@ public class ServletUtils {
 			
 			out.println(op+s+"<br>");
 		}
+	}
+	
+	public static Cookie getCookie(HttpServletRequest request, String name, String value){
+		Cookie cookie =  fetchExistingCookie(request,name);
+		if(cookie!=null)
+		{
+			cookie.setValue(value);
+		}
+		else
+		{
+			cookie = new Cookie(name, value);
+		}
+		return cookie;
+		
 	}
 	
 
