@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import utility.ServletUtils;
 
+/**
+ * Name Page Servlet connecting to first name last name page
+ * @author Barathi
+ * @author Pratibha
+ *
+ */
 public class NamePage extends HttpServlet{
 	private static String file = null;
 	private String cookieId = null;

@@ -14,7 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utility.ServletUtils;
-
+/**
+ * School Page Servlet connecting to hig school information page
+ * @author Barathi
+ * @author Pratibha
+ *
+ */
 public class SchoolPage extends HttpServlet{
 	private static String file = null;
 	private StudentInfo student = null;

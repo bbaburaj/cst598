@@ -18,6 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import utility.ServletUtils;
 
+/**
+ * Welcome Page Servlet connecting to welcome
+ * @author Barathi
+ * @author Pratibha
+ *
+ */
 public class WelcomePage extends HttpServlet {
 	private static String file = null;
 	public static String sessionId = null;

@@ -1,11 +1,16 @@
 package students;
 
 import java.io.*;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 
+/**
+ * The main class that creates every individual studentinfo object, adds on to the static file,
+ * maintain these individual studentInfo object.
+ * @author Barathi
+ * @author Pratibha
+ *
+ */
 public class FormEntry {
 	public static final String STUDENT_FILE = "student.txt";
 	public static final String NEW_LINE = System.getProperty("line.separator");
@@ -65,6 +70,12 @@ public class FormEntry {
 		sInfoMap.put(number, newEntry);
 	}
 
+	/**
+	 * Method to update the information on the static students.txt file
+	 * @param name
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	public void updateStudentFile(String name) throws IOException,
 			URISyntaxException {
 		File f = new File(name);
@@ -87,6 +98,10 @@ public class FormEntry {
 		return sInfoMap.size();
 	}
 
+	/**
+	 * Method to list down all student's information.
+	 * @return
+	 */
 	public List<String> listAllInformation() {
 		List<String> output = new ArrayList<String>();
 		Iterator<StudentInfo> it = sInfoMap.values().iterator();
@@ -101,6 +116,11 @@ public class FormEntry {
 		return sInfoMap.get(id);
 	}
 
+	/**
+	 * Search Algorithm implemented here to enable the users to search via the firstName, lastName etc
+	 * @param qString
+	 * @return result
+	 */
 	public List<String> searchEntry(String qString) {
 		List<String> result = new ArrayList<String>();
 		Iterator<StudentInfo> it = sInfoMap.values().iterator();
@@ -170,6 +190,21 @@ public class FormEntry {
 
 	}
 
+	/**
+	 * Method to display the top 3 matches based on the current student's information.
+	 * The website remembers students based on their id. When registered student 'A' visit the site,
+	 * it displays a sorted list of top 3 students who have similar interests as student 'A'.
+	 * The top 3 matches are based on the following priority:
+	 * 1. Students who know the same language are free on the same day and are from the same
+	 * school are given the HIGHEST PRIORITY
+	 * 2. Students who are free on the same day and either know the same languages or are from same
+	 * school are given the MEDIUM PRIORITY.
+	 * 3. Students who know atleast the same language or are free on the set of days or are from the
+	 * school are given the LOWEST PRIORITY.
+
+	 * @param currentStudent
+	 * @return output
+	 */
 	public List<String> displayTopMatches(StudentInfo currentStudent) {
 		HashMap<Integer, ArrayList<String>> priorityMap = new HashMap<Integer, ArrayList<String>>();
 		List<String> output = new ArrayList<String>();

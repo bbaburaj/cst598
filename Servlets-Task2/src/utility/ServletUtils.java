@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import students.StudentInfo;
 
+/**
+ * The utility class for all operations invoked by the Servlets
+ * @author Barathi
+ * @author Pratibha
+ */
 public class ServletUtils {
 	private static Map<String, StudentInfo> savedSessions = new HashMap<String, StudentInfo>();
 	public static String[] languageArray = {"java","c#", "c","c++","scala","ada","python","j#","lisp","None of the above"};
@@ -34,6 +39,11 @@ public class ServletUtils {
 		return savedSessions.get(sessionid);
 	}
 	
+	/**
+	 * Convert the array to string with concatenating ","
+	 * @param myArray
+	 * @return myString
+	 */
 	public static String getString(String[] myArray){
 		if (myArray==null)return "";
 		String myString = "";
@@ -43,6 +53,12 @@ public class ServletUtils {
 		return myString.substring(0,myString.length()-1);
 	}
 	
+	/**
+	 * Process the cookie information and return the value.
+	 * @param req
+	 * @param cookieName
+	 * @return cookie
+	 */
 	public static String processCookie(HttpServletRequest req, String cookieName) {
 	    Cookie[] cookies = req.getCookies();
 	    if (cookies != null) {
@@ -55,6 +71,11 @@ public class ServletUtils {
 	    return null;
 	}
 	
+	/**
+	 * Delete all the cookies except session id cookie.
+	 * @param req
+	 * @param res
+	 */
 	public static void deleteCookies(HttpServletRequest req, HttpServletResponse res){
 		Cookie[] cookies = req.getCookies();
 	    if (cookies != null) {
@@ -69,6 +90,12 @@ public class ServletUtils {
 	    
 	}
 	
+	/**
+	 * Fetch existing cookies. In order to replace them if needed.
+	 * @param req
+	 * @param cookieName
+	 * @return cookie
+	 */
 	public static Cookie fetchExistingCookie(HttpServletRequest req, String cookieName) {
 	    Cookie[] cookies = req.getCookies();
 	    if (cookies != null) {
@@ -81,6 +108,13 @@ public class ServletUtils {
 	    return null;
 	}
 	
+	/**
+	 * Prepopulate the checkboxes as checked or unchecked based on the cookie information.
+	 * @param out
+	 * @param selectedValues
+	 * @param name
+	 * @param firstRun
+	 */
 	public static void prePopulateCheckBox(PrintWriter out, String[] selectedValues, String name, boolean firstRun){
 		List<String> selectedValuesList = Arrays.asList(selectedValues);	
 		String[] testArray = (name.equals("languages"))?languageArray:daysArray;
@@ -96,6 +130,13 @@ public class ServletUtils {
 		}
 	}
 	
+	/**
+	 * Method either create a new cookie or update the value of an existing cookie
+	 * @param request
+	 * @param name
+	 * @param value
+	 * @return cookie
+	 */
 	public static Cookie getCookie(HttpServletRequest request, String name, String value){
 		Cookie cookie =  fetchExistingCookie(request,name);
 		if(cookie!=null)

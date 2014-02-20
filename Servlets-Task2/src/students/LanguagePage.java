@@ -14,7 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utility.ServletUtils;
-
+/**
+ * Language Page Servlet connecting to list of languages
+ * @author Barathi
+ * @author Pratibha
+ *
+ */
 public class LanguagePage extends HttpServlet{
 	private static String file = null;
 

@@ -14,7 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utility.ServletUtils;
-
+/**
+ * Week Page Servlet connecting to availability
+ * @author Barathi
+ * @author Pratibha
+ *
+ */
 public class WeekPage extends HttpServlet{
 	private static String file = null;
 
