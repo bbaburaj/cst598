@@ -45,6 +45,10 @@ public class StudentInfo {
 		}
 		return languages.substring(0,languages.length()-1);
 	}
+	
+	public String[] getLanguagesKnownArray(){
+		return this.languagesKnown;
+	}
 
 	public String getDaysAvailable() {
 		String days = "";
@@ -52,6 +56,10 @@ public class StudentInfo {
 			days = days.concat(s.concat(","));
 		}
 		return days.substring(0,days.length()-1);
+	}
+	
+	public String[] getDaysArray(){
+		return this.daysAvailable;
 	}
 
 	public String getStudentId() {

@@ -33,22 +33,27 @@ public class WelcomePage extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		ServletContext sc = getServletContext();
-		InputStream is = sc.getResourceAsStream(file);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String queryString = request.getQueryString();
+		ServletContext sc = getServletContext();
+		InputStream is = sc.getResourceAsStream(file);
 		if (queryString != null) {
 			out.println("<HTML><HEAD><TITLE> Search Result</TITLE></HEAD><BODY>");
-			boolean isMobile = request.getHeader("User-Agent").contains("Mobile");
+			boolean isMobile = request.getHeader("User-Agent").contains(
+					"Mobile");
 			if (isMobile) {
 				out.println("<BODY><FONT SIZE=\"8\">");
 			} else {
 				out.println("<BODY style='background-color:pink'><FONT SIZE=\"12\">");
 			}
 			List<String> entries = new FormEntry(is).searchEntry(queryString);
-			for (int i = entries.size() - 1; i >= 0; i--)
-				out.println(entries.get(i) + "<br>");
+			if (entries.contains("Invalid Param")) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			} else {
+				for (int i = entries.size() - 1; i >= 0; i--)
+					out.println(entries.get(i) + "<br>");
+			}
 		} else {
 			out.println("<HTML><HEAD><TITLE> Welcome</TITLE></HEAD><BODY>");
 			sessionId = ServletUtils.processCookie(request, "sessionid");
@@ -87,24 +92,40 @@ public class WelcomePage extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		String id = request.getParameter("id");
+		ServletContext sc = getServletContext();
+		InputStream is = sc.getResourceAsStream(file);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String fName = ServletUtils.processCookie(request, "fName");
-		String lName = ServletUtils.processCookie(request, "lName");
-		fName = ((fName == null) ? "" : fName);
-		lName = ((lName == null) ? "" : lName);
+		FormEntry fe = new FormEntry(is);
+		StudentInfo st = fe.studentRegistered(id);
 		out.println("<HTML><HEAD><TITLE> Information Page</TITLE></HEAD><BODY>");
-		out.println("<h1>Enter Your Name</h1>");
-		out.println("<form name=\"nameForm\" action=\"name\" method=\"post\">");
-		out.println("<label>First Name:</label><input type=\"text\" name=\"fName\" value=\""
-				+ fName
-				+ "\"><br>"
-				+ "<label>Last Name: </label><input type=\"text\" name=\"lName\" value=\""
-				+ lName + "\"><br>");
-		out.println("<a href=\"welcome\">Previous</a><br>"
-				+ "<a href=\"javascript:document.nameForm.submit();\">Next</a>");
-		out.println("</FORM></BODY></HTML>");
-		Cookie cookie1 = new Cookie("id", request.getParameter("id"));
-		response.addCookie(cookie1);
+		if (st != null) {
+			out.println("<h1>Welcome " + st.getFirstName() + " "
+					+ st.getLastName() + "!</h1>");
+			out.println("<h2> Students with Similar interests</h2>");
+			List<String> entries = fe.displayTopMatches(st);
+			for (int i = 0; i <3; i++)
+				out.println(entries.get(i) + "<br>");
+		} else {
+
+			String fName = ServletUtils.processCookie(request, "fName");
+			String lName = ServletUtils.processCookie(request, "lName");
+			fName = ((fName == null) ? "" : fName);
+			lName = ((lName == null) ? "" : lName);
+			out.println("<h1>Enter Your Name</h1>");
+			out.println("<form name=\"nameForm\" action=\"name\" method=\"post\">");
+			out.println("<label>First Name:</label><input type=\"text\" name=\"fName\" value=\""
+					+ fName
+					+ "\"><br>"
+					+ "<label>Last Name: </label><input type=\"text\" name=\"lName\" value=\""
+					+ lName + "\"><br>");
+			out.println("<a href=\"welcome\">Previous</a><br>"
+					+ "<a href=\"javascript:document.nameForm.submit();\">Next</a>");
+			out.println("</FORM>");
+			Cookie cookie1 = new Cookie("id",id);
+			response.addCookie(cookie1);
+		}
+		out.println("</BODY></HTML>");
 	}
 }

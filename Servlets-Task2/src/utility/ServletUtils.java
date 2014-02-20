@@ -3,6 +3,7 @@ package utility;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import students.StudentInfo;
 
 public class ServletUtils {
-
 	private static Map<String, StudentInfo> savedSessions = new HashMap<String, StudentInfo>();
-	public static String[] languageArray = {"java","c#", "c","c++","scala","ada","python","j#","lisp"};
+	public static String[] languageArray = {"java","c#", "c","c++","scala","ada","python","j#","lisp","None of the above"};
 	public static String[] daysArray = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
 	public static String generateUniqueId() throws UnsupportedEncodingException{
 		UUID uid = UUID.randomUUID();  
 		String id = URLEncoder.encode(uid.toString(),"UTF-8");
-	    savedSessions.put(id, new StudentInfo());
 		return id;
 	}
 	
@@ -61,7 +60,6 @@ public class ServletUtils {
 	    if (cookies != null) {
 	        for (Cookie cookie : cookies) {
 	        	if(!cookie.getName().equals("sessionid")){
-	        		System.out.println(cookie.getName()+" "+cookie.getValue());
 	        		cookie.setMaxAge(0);
 		            cookie.setValue("");
 		            res.addCookie(cookie);
@@ -69,6 +67,18 @@ public class ServletUtils {
 	        }
 	    }
 	    
+	}
+	
+	public static Cookie fetchExistingCookie(HttpServletRequest req, String cookieName) {
+	    Cookie[] cookies = req.getCookies();
+	    if (cookies != null) {
+	      for (int i = 0; i < cookies.length; i++) {
+	        if (cookies[i].getName().equals(cookieName)) {
+	          return cookies[i];
+	        }
+	      }
+	    }
+	    return null;
 	}
 	
 	public static void prePopulateCheckBox(PrintWriter out, String[] selectedValues, String name, boolean firstRun){
@@ -85,4 +95,6 @@ public class ServletUtils {
 			out.println(op+s+"<br>");
 		}
 	}
+	
+
 }
