@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import utils.ServletUtils;
+import utility.ServletUtils;
 
 public class NamePage extends HttpServlet{
 	private static String file = null;
