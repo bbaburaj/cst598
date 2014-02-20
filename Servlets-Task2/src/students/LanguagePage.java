@@ -8,9 +8,12 @@ import java.net.URISyntaxException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import utils.ServletUtils;
 
 public class LanguagePage extends HttpServlet{
 	private static String file = null;
@@ -33,6 +36,10 @@ public class LanguagePage extends HttpServlet{
 		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
 		out.println("<h1>Select Days Available</h1>");
 		out.println("<form name=\"weekForm\" action=\"week\" method=\"post\">");
+		out.println("<input type=\"hidden\" name=\"id\" value=\""+request.getParameter("id")+"\">");
+		out.println("<input type=\"hidden\" name=\"fName\" value=\""+request.getParameter("fName")+"\">");
+		out.println("<input type=\"hidden\" name=\"lName\" value=\""+request.getParameter("lName")+"\">");
+		out.println("<input type=\"hidden\" name=\"languages\" value=\""+ServletUtils.getString(request.getParameterValues("languages"))+"\">");
 		out.println("<label>Available On:</label><br>");
 		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Monday\">Monday<br>");
 		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Tuesday\">Tuesday<br>");
@@ -41,9 +48,10 @@ public class LanguagePage extends HttpServlet{
 		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Friday\">Friday<br>");
 		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Saturday\">Saturday<br>");
 		out.println("<input type=\"checkbox\" name=\"availability\" value=\"Sunday\">Sunday<br>");
-		out.println("<a href=\"Language.html\"> Previous </a><br><br>");
+		out.println("<a href=\"language\"> Previous </a><br><br>");
 		out.println("<a href=\"javascript:document.weekForm.submit();\">Next</a>");
 		out.println("</BODY></HTML>");
-		WelcomePage.student.setLanguagesKnown(request.getParameterValues("languages"));
+		Cookie cookie1 = new Cookie("languages", ServletUtils.getString(request.getParameterValues("languages")));
+		response.addCookie(cookie1);
 	}
 }

@@ -41,7 +41,6 @@
       <fileset dir="${resources.dir}"/>
     </copy>
   	<copy file="resources/student.txt" tofile="${build.home}/WEB-INF/classes/resources/student.txt"/>
-  	<copy file="html/Welcome.html" tofile="${build.home}/Welcome.html"/>
   	<copy file="web.xml" tofile="${build.home}/WEB-INF/web.xml"/>
   </target>
     

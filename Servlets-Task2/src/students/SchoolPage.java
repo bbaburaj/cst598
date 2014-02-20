@@ -8,13 +8,16 @@ import java.net.URISyntaxException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import utils.ServletUtils;
+
 public class SchoolPage extends HttpServlet{
 	private static String file = null;
-
+	private StudentInfo student = null;
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		file = config.getInitParameter("student_list");
@@ -23,9 +26,6 @@ public class SchoolPage extends HttpServlet{
 		}
 		System.out.println("Loaded init param student_info with " + file);
 	}
-	public void doGet(HttpServletRequest request, HttpServletResponse response){
-		System.out.println("Hello in get school");
-	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		ServletContext sc = getServletContext();
@@ -33,19 +33,31 @@ public class SchoolPage extends HttpServlet{
 		FormEntry fe = new FormEntry(is);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<HTML><HEAD><TITLE> Student Information Record </TITLE></HEAD><BODY>");
 		String school = request.getParameter("school");
-		WelcomePage.student.setSchool(school);
-		out.println(WelcomePage.student.toString()+"<br>");
-		fe.addInfo(WelcomePage.student.getStudentId(), WelcomePage.student);
-		try {
-			String realPath = sc.getRealPath("/");
-			realPath = realPath.concat(file.substring(1));
-			fe.updateStudentFile(realPath);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String id = request.getParameter("id");
+		String fName = request.getParameter("fName");
+		String lName = request.getParameter("lName");
+		String[] languages = request.getParameter("languages").split(",");
+		String[] days = request.getParameter("availability").split(",");
+		String userAction = request.getParameter("userAction");
+		System.out.println(userAction);
+		if(userAction.equals("Cancel")){
+			response.sendRedirect(request.getContextPath()+"/welcome");
 		}
-		out.println("</BODY></HTML>");
+		else{
+			StudentInfo student = new StudentInfo(fName, lName, languages, days, id, school);
+			fe.addInfo(id,student);
+			ServletUtils.updateSessionInformation(WelcomePage.sessionId, student);
+			try {
+				String realPath = sc.getRealPath("/");
+				realPath = realPath.concat(file.substring(1));
+				fe.updateStudentFile(realPath);
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+			response.sendRedirect(request.getContextPath()+"/welcome");
+			Cookie cookie1 = new Cookie("school", request.getParameter("school"));
+			response.addCookie(cookie1);
+		}
 	}
 }
