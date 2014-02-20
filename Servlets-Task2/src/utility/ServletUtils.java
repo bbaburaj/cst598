@@ -35,7 +35,7 @@ public class ServletUtils {
 	}
 	
 	public static String getString(String[] myArray){
-		System.out.println("["+myArray+"]");
+		if (myArray==null)return "";
 		String myString = "";
 		for (String s : myArray) {
 			myString = myString.concat(s.concat(","));
