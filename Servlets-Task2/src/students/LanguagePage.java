@@ -43,7 +43,7 @@ public class LanguagePage extends HttpServlet{
 		out.println("<form name=\"languageForm\" action=\"language\" method=\"post\" >");
 		out.println("<label>Languages Known:</label><br>");
 		ServletUtils.prePopulateCheckBox(out, languages, "languages",firstRun);
-		out.println("<a href=\"name\" > Previous </a><br><br>");
+		out.println("<a href=\"name\" > Previous </a><br>");
 		out.println("<a href=\"javascript:document.languageForm.submit();\" >Next</a>");
 		out.println("</FORM></BODY></HTML>");
 	}

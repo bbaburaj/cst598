@@ -44,7 +44,7 @@ public class WeekPage extends HttpServlet{
 		out.println("<form name=\"weekForm\" action=\"week\" method=\"post\">");
 		out.println("<label>Available On:</label><br>");
 		ServletUtils.prePopulateCheckBox(out, days, "availability",firstRun);
-		out.println("<a href=\"language\"> Previous </a><br><br>");
+		out.println("<a href=\"language\"> Previous </a><br>");
 		out.println("<a href=\"javascript:document.weekForm.submit();\">Next</a>");
 		out.println("</BODY></HTML>");
 	}
