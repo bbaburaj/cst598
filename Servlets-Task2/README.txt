@@ -13,7 +13,19 @@ The students are requested to enter their:
 -> days of the week they are free
 -> high school
 
-Accessing the form
+Displaying the top 3 matches
+******************************************************************************************
+The website remembers students based on their id. When registered student 'A' visit the site,
+it displays a sorted list of top 3 students who have similar interests as student 'A'.
+The top 3 matches are based on the following priority:
+1. Students who know the same language are free on the same day and are from the same
+school are given the HIGHEST PRIORITY
+2. Students who are free on the same day and either know the same languages or are from same
+school are given the MEDIUM PRIORITY.
+3. Students who know atleast the same language or are free on the set of days or are from the
+school are given the LOWEST PRIORITY.
+
+Accessing the static file
 ******************************************************************************************
 The information entered via the students is stored on a physical file located at
 ${tomcat-home}/webapps/lab3Task2/resources/students.txt
@@ -21,7 +33,7 @@ ${tomcat-home}/webapps/lab3Task2/resources/students.txt
 Remembering your last visit
 ******************************************************************************************
 The website remembers your visit until the session is completely closed (all tabs are closed)
-The website also remembers students who are registered already.
+The website also remembers students who are registered already based on their id.
 
 Searching the information
 ******************************************************************************************
@@ -42,14 +54,4 @@ jsharp instead of j#
 E.g:
 http://localhost:8080/lab3Task2/welcome?languages=csharp
 
-Displaying the top 3 matches
-******************************************************************************************
-The website remembers students based on their id. When registered student 'A' visit the site,
-it displays a sorted list of top 3 students who have similar interests as student 'A'.
-The top 3 matches are based on the following priority:
-1. Students who know the same language are free on the same day and are from the same
-school are given the HIGHEST PRIORITY
-2. Students who are free on the same day and either know the same languages or are from same
-school are given the MEDIUM PRIORITY.
-3. Students who know atleast the same language or are free on the set of days or are from the
-school are given the LOWEST PRIORITY.
+
