@@ -40,7 +40,7 @@ cpp instead of c++
 csharp instead of c#
 jsharp instead of j#
 E.g:
-http://localhost:8080/lab3Task1/studentServlet?languages=csharp
+http://localhost:8080/lab3Task2/welcome?languages=csharp
 
 Displaying the top 3 matches
 ******************************************************************************************
