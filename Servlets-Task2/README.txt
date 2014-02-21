@@ -2,10 +2,8 @@ Student Information Form and Server
 ******************************************************************************************
 The following application enables students to enter some common information about them. 
 The application is accessible via 
-http://localhost:8080/lab3Task2
-OR
-http://<ip>:8080/<context>
-<context> = lab3Task2
+http://localhost:8080/lab3Task2/welcome
+
 
 The students are requested to enter their:
 -> student id
@@ -18,7 +16,7 @@ The students are requested to enter their:
 Accessing the form
 ******************************************************************************************
 The information entered via the students is stored on a physical file located at
-${tomcat-home}/webapps/lab3Task1/resources/students.txt
+${tomcat-home}/webapps/lab3Task2/resources/students.txt
 
 Remembering your last visit
 ******************************************************************************************
